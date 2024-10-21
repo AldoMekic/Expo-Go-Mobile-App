@@ -1,31 +1,42 @@
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { View, ScrollView, Text, StyleSheet } from "react-native";
+import Headline from "@/components/Headline";
+import SearchBar from "@/components/SearchBar";
+import News from "@/components/News";
+import ActorCategory from "@/components/ActorCategory";
+import TopPicksCategory from "@/components/TopPicksCategory";
+import FanFavoriteCategory from "@/components/FanFavoriteCategory";
+import BehindTheScenes from "@/components/BehindTheScenes";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-
-export default function TabOneScreen() {
+const Home: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Text style={styles.text}>Welcome to the Home page</Text>
+        <Headline />
+        <SearchBar />
+        <News />
+        <ActorCategory />
+        <TopPicksCategory />
+        <FanFavoriteCategory />
+        <BehindTheScenes />
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
+  text: {
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
+
+export default Home;
