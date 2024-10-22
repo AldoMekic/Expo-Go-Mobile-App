@@ -71,7 +71,6 @@ const TopPicksCategory: React.FC = () => {
       <Animated.View
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
-        {/* First Slide */}
         <View style={styles.container}>
           <View
             style={[styles.topPicksItem, { backgroundColor: "lightblue" }]}
@@ -79,7 +78,6 @@ const TopPicksCategory: React.FC = () => {
           <View style={[styles.topPicksItem, { backgroundColor: "pink" }]} />
         </View>
 
-        {/* Second Slide */}
         <View style={styles.container}>
           <View style={[styles.topPicksItem, { backgroundColor: "orange" }]} />
           <View

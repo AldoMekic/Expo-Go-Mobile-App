@@ -71,7 +71,6 @@ const News: React.FC = () => {
       <Animated.View
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
-        {/* First Slide */}
         <View style={styles.container}>
           <View style={[styles.newsItem, { backgroundColor: "red" }]} />
           <View style={[styles.newsItem, { backgroundColor: "green" }]} />
@@ -79,7 +78,6 @@ const News: React.FC = () => {
           <View style={[styles.newsItem, { backgroundColor: "yellow" }]} />
         </View>
 
-        {/* Second Slide */}
         <View style={styles.container}>
           <View style={[styles.newsItem, { backgroundColor: "purple" }]} />
           <View style={[styles.newsItem, { backgroundColor: "orange" }]} />

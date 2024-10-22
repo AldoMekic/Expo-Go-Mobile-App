@@ -71,13 +71,10 @@ const ActorCategory: React.FC = () => {
       <Animated.View
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
-        {/* First Slide */}
         <View style={styles.container}>
           <View style={[styles.actorItem, { backgroundColor: "purple" }]} />
           <View style={[styles.actorItem, { backgroundColor: "orange" }]} />
         </View>
-
-        {/* Second Slide */}
         <View style={styles.container}>
           <View style={[styles.actorItem, { backgroundColor: "blue" }]} />
           <View style={[styles.actorItem, { backgroundColor: "green" }]} />

@@ -10,35 +10,32 @@ import {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
-// Container height (half the screen height)
 const containerHeight = screenHeight / 2;
 
 const Headline: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0); // 0 for the first set, 1 for the second set
-  const translateX = useRef(new Animated.Value(0)).current; // Animated value for horizontal sliding
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const translateXUpper = useRef(new Animated.Value(0)).current;
+  const translateXLower = useRef(new Animated.Value(0)).current;
 
-  // PanResponder for handling swipe gestures
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) =>
-        Math.abs(gestureState.dx) > 20, // Start pan if horizontal gesture detected
+        Math.abs(gestureState.dx) > 20,
       onPanResponderMove: (evt, gestureState) => {
         if (
-          (gestureState.dx < 0 && currentSlide === 0) || // Swiping left on first slide
-          (gestureState.dx > 0 && currentSlide === 1) // Swiping right on second slide
+          (gestureState.dx < 0 && currentSlide === 0) ||
+          (gestureState.dx > 0 && currentSlide === 1)
         ) {
-          translateX.setValue(gestureState.dx); // Move the slide based on gesture
+          translateXUpper.setValue(gestureState.dx);
+          translateXLower.setValue(gestureState.dx);
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
         if (gestureState.dx < -50 && currentSlide === 0) {
-          // Swiped left on the first slide
           slideToNext();
         } else if (gestureState.dx > 50 && currentSlide === 1) {
-          // Swiped right on the second slide
           slideToPrev();
         } else {
-          // Return to original position if no significant swipe
           resetSlide();
         }
       },
@@ -46,28 +43,42 @@ const Headline: React.FC = () => {
   ).current;
 
   const slideToNext = () => {
-    Animated.timing(translateX, {
-      toValue: -screenWidth, // Slide left
-      duration: 300,
+    Animated.timing(translateXUpper, {
+      toValue: -screenWidth,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(translateXLower, {
+      toValue: -screenWidth,
+      duration: 400,
       useNativeDriver: true,
     }).start(() => {
-      setCurrentSlide(1); // Set the current slide to the second one
+      setCurrentSlide(1);
     });
   };
 
   const slideToPrev = () => {
-    Animated.timing(translateX, {
-      toValue: 0, // Slide right (back to the original)
-      duration: 300,
+    Animated.timing(translateXUpper, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(translateXLower, {
+      toValue: 0,
+      duration: 400,
       useNativeDriver: true,
     }).start(() => {
-      setCurrentSlide(0); // Set the current slide to the first one
+      setCurrentSlide(0);
     });
   };
 
   const resetSlide = () => {
-    Animated.spring(translateX, {
-      toValue: currentSlide === 0 ? 0 : -screenWidth, // Snap back to current slide
+    Animated.spring(translateXUpper, {
+      toValue: currentSlide === 0 ? 0 : -screenWidth,
+      useNativeDriver: true,
+    }).start();
+    Animated.spring(translateXLower, {
+      toValue: currentSlide === 0 ? 0 : -screenWidth,
       useNativeDriver: true,
     }).start();
   };
@@ -77,27 +88,28 @@ const Headline: React.FC = () => {
       <Animated.View
         style={[
           styles.slideContainer,
-          { transform: [{ translateX }] }, // Apply animation for sliding
+          { transform: [{ translateX: translateXUpper }] },
         ]}
       >
-        {/* First Slide */}
-        <View style={styles.container}>
-          <View style={styles.upperDiv}>
-            <Text style={styles.upperText}>Video placed here</Text>
-          </View>
-          <View style={styles.lowerDiv}>
-            <Text style={styles.lowerText}>Title placed here</Text>
-          </View>
+        <View style={styles.upperDiv}>
+          <Text style={styles.upperText}>Video placed here</Text>
         </View>
+        <View style={[styles.upperDiv, { backgroundColor: "green" }]}>
+          <Text style={styles.upperText}>Alternate video here</Text>
+        </View>
+      </Animated.View>
 
-        {/* Second Slide */}
-        <View style={styles.container}>
-          <View style={[styles.upperDiv, { backgroundColor: "green" }]}>
-            <Text style={styles.upperText}>Alternate video here</Text>
-          </View>
-          <View style={[styles.lowerDiv, { backgroundColor: "red" }]}>
-            <Text style={styles.lowerText}>Alternate title here</Text>
-          </View>
+      <Animated.View
+        style={[
+          styles.slideContainer,
+          { transform: [{ translateX: translateXLower }] },
+        ]}
+      >
+        <View style={styles.lowerDiv}>
+          <Text style={styles.lowerText}>Title placed here</Text>
+        </View>
+        <View style={[styles.lowerDiv, { backgroundColor: "red" }]}>
+          <Text style={styles.lowerText}>Alternate title here</Text>
         </View>
       </Animated.View>
     </View>
@@ -108,11 +120,11 @@ const styles = StyleSheet.create({
   container: {
     width: screenWidth,
     height: containerHeight,
-    overflow: "hidden", // Hide overflow for sliding effect
+    overflow: "hidden",
   },
   slideContainer: {
-    flexDirection: "row", // Align slides side by side
-    width: screenWidth * 2, // Two slides width (each slide is full width)
+    flexDirection: "row",
+    width: screenWidth * 2,
   },
   upperDiv: {
     backgroundColor: "blue",

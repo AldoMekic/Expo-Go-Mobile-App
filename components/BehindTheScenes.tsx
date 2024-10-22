@@ -71,13 +71,11 @@ const BehindTheScenes: React.FC = () => {
       <Animated.View
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
-        {/* First Slide */}
         <View style={styles.container}>
           <View style={[styles.btsItem, { backgroundColor: "lightgreen" }]} />
           <View style={[styles.btsItem, { backgroundColor: "lavender" }]} />
         </View>
 
-        {/* Second Slide */}
         <View style={styles.container}>
           <View style={[styles.btsItem, { backgroundColor: "peachpuff" }]} />
           <View style={[styles.btsItem, { backgroundColor: "lightcoral" }]} />

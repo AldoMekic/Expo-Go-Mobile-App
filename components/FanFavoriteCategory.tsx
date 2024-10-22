@@ -71,7 +71,6 @@ const FanFavoriteCategory: React.FC = () => {
       <Animated.View
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
-        {/* First Slide */}
         <View style={styles.container}>
           <View style={[styles.fanFavoriteItem, { backgroundColor: "lime" }]} />
           <View
@@ -79,7 +78,6 @@ const FanFavoriteCategory: React.FC = () => {
           />
         </View>
 
-        {/* Second Slide */}
         <View style={styles.container}>
           <View style={[styles.fanFavoriteItem, { backgroundColor: "blue" }]} />
           <View
