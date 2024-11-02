@@ -6,9 +6,9 @@ import {
   Animated,
   PanResponder,
 } from "react-native";
+import MovieCard from "./MovieCard";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
 const containerHeight = screenHeight / 2;
 
 const FanFavoriteCategory: React.FC = () => {
@@ -28,13 +28,9 @@ const FanFavoriteCategory: React.FC = () => {
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx < -50 && currentSlide === 0) {
-          slideToNext();
-        } else if (gestureState.dx > 50 && currentSlide === 1) {
-          slideToPrev();
-        } else {
-          resetSlide();
-        }
+        if (gestureState.dx < -50 && currentSlide === 0) slideToNext();
+        else if (gestureState.dx > 50 && currentSlide === 1) slideToPrev();
+        else resetSlide();
       },
     })
   ).current;
@@ -44,9 +40,7 @@ const FanFavoriteCategory: React.FC = () => {
       toValue: -screenWidth,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => {
-      setCurrentSlide(1);
-    });
+    }).start(() => setCurrentSlide(1));
   };
 
   const slideToPrev = () => {
@@ -54,9 +48,7 @@ const FanFavoriteCategory: React.FC = () => {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => {
-      setCurrentSlide(0);
-    });
+    }).start(() => setCurrentSlide(0));
   };
 
   const resetSlide = () => {
@@ -72,17 +64,12 @@ const FanFavoriteCategory: React.FC = () => {
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
         <View style={styles.container}>
-          <View style={[styles.fanFavoriteItem, { backgroundColor: "lime" }]} />
-          <View
-            style={[styles.fanFavoriteItem, { backgroundColor: "coral" }]}
-          />
+          <MovieCard color="lime" />
+          <MovieCard color="coral" />
         </View>
-
         <View style={styles.container}>
-          <View style={[styles.fanFavoriteItem, { backgroundColor: "blue" }]} />
-          <View
-            style={[styles.fanFavoriteItem, { backgroundColor: "yellow" }]}
-          />
+          <MovieCard color="blue" />
+          <MovieCard color="yellow" />
         </View>
       </Animated.View>
     </View>
@@ -101,12 +88,6 @@ const styles = StyleSheet.create({
   slideContainer: {
     flexDirection: "row",
     width: screenWidth * 2,
-  },
-  fanFavoriteItem: {
-    flex: 1,
-    height: "80%",
-    marginHorizontal: 5,
-    borderRadius: 10,
   },
 });
 

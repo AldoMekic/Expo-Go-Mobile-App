@@ -6,9 +6,9 @@ import {
   Animated,
   PanResponder,
 } from "react-native";
+import MovieCard from "./MovieCard";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
 const containerHeight = screenHeight / 2;
 
 const ActorCategory: React.FC = () => {
@@ -72,12 +72,12 @@ const ActorCategory: React.FC = () => {
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
         <View style={styles.container}>
-          <View style={[styles.actorItem, { backgroundColor: "purple" }]} />
-          <View style={[styles.actorItem, { backgroundColor: "orange" }]} />
+          <MovieCard color="blue" />
+          <MovieCard color="blue" />
         </View>
         <View style={styles.container}>
-          <View style={[styles.actorItem, { backgroundColor: "blue" }]} />
-          <View style={[styles.actorItem, { backgroundColor: "green" }]} />
+          <MovieCard color="blue" />
+          <MovieCard color="blue" />
         </View>
       </Animated.View>
     </View>
@@ -96,12 +96,6 @@ const styles = StyleSheet.create({
   slideContainer: {
     flexDirection: "row",
     width: screenWidth * 2,
-  },
-  actorItem: {
-    flex: 1,
-    height: "80%",
-    marginHorizontal: 5,
-    borderRadius: 10,
   },
 });
 

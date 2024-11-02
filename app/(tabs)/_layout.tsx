@@ -55,6 +55,20 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="ErrorPage"
+        options={{
+          title: "Error",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="MoviePage"
+        options={{
+          title: "Movie",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

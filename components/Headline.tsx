@@ -9,7 +9,6 @@ import {
 } from "react-native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
 const containerHeight = screenHeight / 2;
 
 const Headline: React.FC = () => {
@@ -23,17 +22,21 @@ const Headline: React.FC = () => {
         Math.abs(gestureState.dx) > 20,
       onPanResponderMove: (evt, gestureState) => {
         if (
-          (gestureState.dx < 0 && currentSlide === 0) ||
-          (gestureState.dx > 0 && currentSlide === 1)
+          (gestureState.dx < 0 && currentSlide < 2) ||
+          (gestureState.dx > 0 && currentSlide > 0)
         ) {
-          translateXUpper.setValue(gestureState.dx);
-          translateXLower.setValue(gestureState.dx);
+          translateXUpper.setValue(
+            gestureState.dx - currentSlide * screenWidth
+          );
+          translateXLower.setValue(
+            gestureState.dx - currentSlide * screenWidth
+          );
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx < -50 && currentSlide === 0) {
+        if (gestureState.dx < -100 && currentSlide < 2) {
           slideToNext();
-        } else if (gestureState.dx > 50 && currentSlide === 1) {
+        } else if (gestureState.dx > 50 && currentSlide > 0) {
           slideToPrev();
         } else {
           resetSlide();
@@ -43,42 +46,46 @@ const Headline: React.FC = () => {
   ).current;
 
   const slideToNext = () => {
-    Animated.timing(translateXUpper, {
-      toValue: -screenWidth,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(translateXLower, {
-      toValue: -screenWidth,
-      duration: 400,
-      useNativeDriver: true,
-    }).start(() => {
-      setCurrentSlide(1);
-    });
+    if (currentSlide < 2) {
+      Animated.timing(translateXUpper, {
+        toValue: -(currentSlide + 1) * screenWidth,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      Animated.timing(translateXLower, {
+        toValue: -(currentSlide + 1) * screenWidth,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentSlide(currentSlide + 1);
+      });
+    }
   };
 
   const slideToPrev = () => {
-    Animated.timing(translateXUpper, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(translateXLower, {
-      toValue: 0,
-      duration: 400,
-      useNativeDriver: true,
-    }).start(() => {
-      setCurrentSlide(0);
-    });
+    if (currentSlide > 0) {
+      Animated.timing(translateXUpper, {
+        toValue: -(currentSlide - 1) * screenWidth,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      Animated.timing(translateXLower, {
+        toValue: -(currentSlide - 1) * screenWidth,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(() => {
+        setCurrentSlide(currentSlide - 1);
+      });
+    }
   };
 
   const resetSlide = () => {
     Animated.spring(translateXUpper, {
-      toValue: currentSlide === 0 ? 0 : -screenWidth,
+      toValue: -currentSlide * screenWidth,
       useNativeDriver: true,
     }).start();
     Animated.spring(translateXLower, {
-      toValue: currentSlide === 0 ? 0 : -screenWidth,
+      toValue: -currentSlide * screenWidth,
       useNativeDriver: true,
     }).start();
   };
@@ -97,6 +104,9 @@ const Headline: React.FC = () => {
         <View style={[styles.upperDiv, { backgroundColor: "green" }]}>
           <Text style={styles.upperText}>Alternate video here</Text>
         </View>
+        <View style={[styles.upperDiv, { backgroundColor: "purple" }]}>
+          <Text style={styles.upperText}>Another video here</Text>
+        </View>
       </Animated.View>
 
       <Animated.View
@@ -111,6 +121,9 @@ const Headline: React.FC = () => {
         <View style={[styles.lowerDiv, { backgroundColor: "red" }]}>
           <Text style={styles.lowerText}>Alternate title here</Text>
         </View>
+        <View style={[styles.lowerDiv, { backgroundColor: "darkblue" }]}>
+          <Text style={styles.lowerText}>Another title here</Text>
+        </View>
       </Animated.View>
     </View>
   );
@@ -124,7 +137,7 @@ const styles = StyleSheet.create({
   },
   slideContainer: {
     flexDirection: "row",
-    width: screenWidth * 2,
+    width: screenWidth * 3,
   },
   upperDiv: {
     backgroundColor: "blue",
