@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
-
+import { View, Text, Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { Menu, Divider } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,6 +18,10 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
 
   return (
     <Tabs
@@ -66,6 +71,42 @@ export default function TabLayout() {
         name="MoviePage"
         options={{
           title: "Movie",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          header: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: 15,
+                paddingTop: 50,
+                backgroundColor: Colors.light.background,
+              }}
+            >
+              <Text style={{ fontSize: 28, fontWeight: "bold" }}>
+                Movie Title
+              </Text>
+              <Menu
+                visible={menuVisible}
+                onDismiss={closeMenu}
+                anchor={
+                  <Pressable onPress={openMenu}>
+                    <Icon name="more-vert" size={24} color="black" />
+                  </Pressable>
+                }
+              >
+                <Menu.Item onPress={() => {}} title="Add to List" />
+                <Divider />
+                <Menu.Item onPress={() => {}} title="Add a Review" />
+              </Menu>
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ActorPage"
+        options={{
+          title: "Actor",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

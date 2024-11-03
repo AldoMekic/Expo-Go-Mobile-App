@@ -6,12 +6,12 @@ import {
   Animated,
   PanResponder,
 } from "react-native";
-import ActorCard from "./ActorCard";
+import MovieCard from "./MovieCard";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const containerHeight = screenHeight / 2;
 
-const ActorCategory: React.FC = () => {
+const MovieCategory: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const translateX = useRef(new Animated.Value(0)).current;
 
@@ -72,12 +72,12 @@ const ActorCategory: React.FC = () => {
         style={[styles.slideContainer, { transform: [{ translateX }] }]}
       >
         <View style={styles.container}>
-          <ActorCard color="blue" />
-          <ActorCard color="blue" />
+          <MovieCard color="blue" />
+          <MovieCard color="blue" />
         </View>
         <View style={styles.container}>
-          <ActorCard color="blue" />
-          <ActorCard color="blue" />
+          <MovieCard color="blue" />
+          <MovieCard color="blue" />
         </View>
       </Animated.View>
     </View>
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActorCategory;
+export default MovieCategory;
