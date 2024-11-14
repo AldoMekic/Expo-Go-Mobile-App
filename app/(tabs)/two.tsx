@@ -7,7 +7,7 @@ const Search: React.FC = () => {
   return (
     <View style={styles.container}>
       <SearchBar />
-      {/*<SearchCheckbox /> */}
+      <SearchCheckbox />
     </View>
   );
 };

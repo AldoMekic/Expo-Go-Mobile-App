@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { Checkbox } from "react-native-paper";
 
 const SearchCheckbox: React.FC = () => {
   const [isActionChecked, setActionChecked] = useState(false);
@@ -10,17 +10,26 @@ const SearchCheckbox: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.checkboxContainer}>
-        <CheckBox value={isActionChecked} onValueChange={setActionChecked} />
+        <Checkbox
+          status={isActionChecked ? "checked" : "unchecked"}
+          onPress={() => setActionChecked(!isActionChecked)}
+        />
         <Text style={styles.label}>Action</Text>
       </View>
 
       <View style={styles.checkboxContainer}>
-        <CheckBox value={isHorrorChecked} onValueChange={setHorrorChecked} />
+        <Checkbox
+          status={isHorrorChecked ? "checked" : "unchecked"}
+          onPress={() => setHorrorChecked(!isHorrorChecked)}
+        />
         <Text style={styles.label}>Horror</Text>
       </View>
 
       <View style={styles.checkboxContainer}>
-        <CheckBox value={isDramaChecked} onValueChange={setDramaChecked} />
+        <Checkbox
+          status={isDramaChecked ? "checked" : "unchecked"}
+          onPress={() => setDramaChecked(!isDramaChecked)}
+        />
         <Text style={styles.label}>Drama</Text>
       </View>
     </View>
