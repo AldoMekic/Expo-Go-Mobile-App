@@ -1,6 +1,7 @@
 import React from "react";
 import { View, ScrollView, Text, StyleSheet } from "react-native";
 import ActorCategory from "@/components/ActorCategory";
+import MovieRating from "@/components/MovieRating";
 
 const MoviePage: React.FC = () => {
   return (
@@ -12,6 +13,8 @@ const MoviePage: React.FC = () => {
           <Text style={styles.detail}>Runtime: 120 minutes</Text>
         </View>
       </View>
+
+      <MovieRating />
 
       <View style={styles.middleDiv}>
         <Text style={styles.description}>
